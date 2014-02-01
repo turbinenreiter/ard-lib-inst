@@ -10,7 +10,7 @@ import csv
 # reads the list of repos
 def getliblist():
     try:
-        repo = '/home/plam/projects/ard-lib-inst/repo.csv'
+        repo = os.path.dirname(os.path.realpath(__file__))+'/repo.csv'
         libs = []
         with open(repo, 'rb') as csvfile:
             reader = csv.reader(csvfile)
@@ -25,12 +25,13 @@ def getliblist():
 # downloads libs and unpacks them to the lib-folder
 def getlib(name, url):
     try:
-        if os.path.isdir('/home/plam/sketchbook/libraries/'+name) == False:
+        username = 'plam'
+        if os.path.isdir('/home/'+username+'/sketchbook/libraries/'+name) == False:
             req = requests.get(url)
             zipobj = zipfile.ZipFile(StringIO.StringIO(req.content))
-            zipobj.extractall('/home/plam/sketchbook/libraries')
+            zipobj.extractall('/home/'+username+'/sketchbook/libraries')
             dirname = zipobj.namelist()[0][:-1]
-            os.rename('/home/plam/sketchbook/libraries/'+dirname,'/home/plam/sketchbook/libraries/'+name)
+            os.rename('/home/'+username+'/sketchbook/libraries/'+dirname,'/home/plam/sketchbook/libraries/'+name)
             print '\tInstalled '+name
         else:
             print '\t'+name+' is already installed.'
