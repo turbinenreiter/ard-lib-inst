@@ -63,7 +63,7 @@ class library():
             return 'installall'
 
 def error():
-    print '\n\tValid inputs are:\n\n\t\tardlib.py list\n\t\tardlib.py installall\n\t\tardlib.py install <lib>\n'
+    print '\n\tValid inputs are:\n\n\t\tardlib.py listlibs\n\t\tardlib.py install all\n\t\tardlib.py install <lib>\n'
     sys.exit()
 
 def main(argv):
