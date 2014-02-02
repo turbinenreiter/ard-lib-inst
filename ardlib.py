@@ -91,7 +91,6 @@ def main(argv):
         sys.exit()
     else:
         error()
-        
 
 if __name__ == '__main__':
     main(sys.argv[1:])
