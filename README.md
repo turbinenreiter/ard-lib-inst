@@ -7,6 +7,9 @@ A list of more libraries is available under http://playground.arduino.cc/Main/Li
 
 Usage:
 ------
+
+Type the commands in the terminal. Don't use sudo, it will mess up the ownership of the files.  
+
     python ardlib.py listlibs               #list of available libraries
     python ardlib.py install all            #install all available libraries
     python ardlib.py install <lib>          #install <lib>
