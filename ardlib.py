@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# ard-lib-inst
+# ardlib
 # Arduino Library Installer by Sebastian Plamauer
 
 import requests
