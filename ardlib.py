@@ -6,6 +6,7 @@ import requests
 import zipfile
 import StringIO
 import os
+import shutil
 import csv
 import sys
 import getopt
@@ -62,15 +63,35 @@ class library():
                 self.installlib(lib[0])
             return 'installall'
 
+    #deletelib
+        def deletelib(self, name):
+            found = False
+            for lib in self.liblist:
+                if lib[0] == name:
+                    url = lib[1]
+                    found = True
+                    try:
+                        if os.path.isdir(self.libraries+name) == False:
+                            print name+' is not installed.'
+                        else:
+                            shutil.rmtree(self.libraries+name)
+                            print name+' is deleted.'
+                    except: print 'There was an error.'
+            if found == False: print 'The lib '+name+' is not in the repo.'
+            return 'installlib'
+
 def error():
-    print '\n\tValid inputs are:\n\n\t\tardlib.py listlibs\n\t\tardlib.py install all\n\t\tardlib.py install <lib>\n'
+    print '\n\tValid inputs are:\n\n\t\tardlib.py listlibs\n\t\tardlib.py install all\n\t\tardlib.py install <lib>\n\t\tardlib.py delete <lib>\n'
     sys.exit()
 
 def main(argv):
 
     repo = library()
     repo.getliblist()
-    command = argv[0]
+    try:
+        command = argv[0]
+    except:
+        error()
 
     if len(argv) == 1:
         lib = ''
@@ -88,6 +109,9 @@ def main(argv):
         sys.exit()
     elif command == 'install':
         repo.installlib(lib)
+        sys.exit()
+    elif command == 'delete':
+        repo.deletelib(lib)
         sys.exit()
     else:
         error()
