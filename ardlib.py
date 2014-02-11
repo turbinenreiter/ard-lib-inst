@@ -10,7 +10,7 @@ import csv
 import sys
 import getopt
 from os.path import expanduser
-import pdb
+
 
 
 class library():
