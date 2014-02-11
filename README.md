@@ -13,7 +13,7 @@ Type the commands in the terminal. Don't use sudo, it will mess up the ownership
     python ardlib.py listlibs               #lists all available libraries
     python ardlib.py install all            #installs all available libraries
     python ardlib.py install <lib>          #installs <lib>
-    python ardlib.py delete <lib>           #installs <lib>
+    python ardlib.py delete <lib>           #deletes <lib>
 
 Contributing to the repo-file:
 ------------------------------
