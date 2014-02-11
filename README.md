@@ -10,7 +10,14 @@ Usage:
 
 Type the commands in the terminal. Don't use sudo, it will mess up the ownership of the files.  
 
-    python ardlib.py listlibs               #list of available libraries
-    python ardlib.py install all            #install all available libraries
-    python ardlib.py install <lib>          #install <lib>
+    python ardlib.py listlibs               #lists all available libraries
+    python ardlib.py install all            #installs all available libraries
+    python ardlib.py install <lib>          #installs <lib>
+    python ardlib.py delete <lib>           #installs <lib>
 
+Contributing to the repo-file:
+------------------------------
+
+Add links to libraries to the repo file in the following form:
+
+    Name,URL-to-zip-file,URL-to-project-home
