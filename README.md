@@ -14,3 +14,11 @@ Type the commands in the terminal. Don't use sudo, it will mess up the ownership
     python ardlib.py install all            #install all available libraries
     python ardlib.py install <lib>          #install <lib>
 
+Contributing to the repo-file:
+------------------------------
+
+Just add whichever library you like in a form like that:
+
+    name,url-to-the-zip-file,info
+
+The info can be a short description or a url to the projects home.
