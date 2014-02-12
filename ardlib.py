@@ -10,6 +10,7 @@ import csv
 import sys
 import getopt
 from os.path import expanduser
+import crawl
 
 
 
@@ -18,7 +19,7 @@ class library():
 #init
 	def __init__(self):
 		self.home = expanduser("~")
-		self.repo = os.path.dirname(os.path.realpath(__file__))+'/repo.csv'
+		self.repo = os.path.dirname(os.path.realpath(__file__))+'/test.csv'
 		self.libraries = self.home+'/sketchbook/libraries/'
 		self.liblist = []
 
@@ -91,6 +92,9 @@ def main(argv):
 		sys.exit()
 	elif command == 'install':
 		repo.installlib(lib)
+		sys.exit()
+	elif command == 'install' and lib=='url':
+		repo.installurl()
 		sys.exit()
 	else:
 		error()
