@@ -18,7 +18,7 @@ class library():
     #init
 	def __init__(self):
 		self.home = expanduser("~")
-		self.repo = os.path.dirname(os.path.realpath(__file__))+'/test.csv'
+		self.repo = os.path.dirname(os.path.realpath(__file__))+'/repo.csv'
 		self.libraries = self.home+'/sketchbook/libraries/'
 		self.liblist = []
 
@@ -91,9 +91,6 @@ def error():
 
 def main(argv):
 	
-	repo = library()
-	repo.getliblist()
-	command = argv[0]
     repo = library()
     repo.getliblist()
     try:
