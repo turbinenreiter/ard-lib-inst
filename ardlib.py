@@ -20,6 +20,9 @@ class library():
         self.home = expanduser("~")
         self.repo = os.path.dirname(os.path.realpath(__file__))+'/repo.csv'
         self.libraries = self.home+'/sketchbook/libraries/'
+        if os.path.isdir(self.libraries) == False:
+            print self.libraries+' doesn\'t exist.'
+            sys.exit()
         self.liblist = []
 
     #getliblist
@@ -61,10 +64,10 @@ class library():
         return 'installlib'
 
     #installall
-	def installall(self):
-		for lib in self.liblist:
-			self.installlib(lib[0])
-		return 'installall'
+    def installall(self):
+        for lib in self.liblist:
+            self.installlib(lib[0])
+        return 'installall'
 
     #deletelib
     def deletelib(self, name):
