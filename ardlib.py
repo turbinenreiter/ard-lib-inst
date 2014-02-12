@@ -16,49 +16,49 @@ from os.path import expanduser
 class library():
 
     #init
-	def __init__(self):
-		self.home = expanduser("~")
-		self.repo = os.path.dirname(os.path.realpath(__file__))+'/repo.csv'
-		self.libraries = self.home+'/sketchbook/libraries/'
-		self.liblist = []
+    def __init__(self):
+        self.home = expanduser("~")
+        self.repo = os.path.dirname(os.path.realpath(__file__))+'/repo.csv'
+        self.libraries = self.home+'/sketchbook/libraries/'
+        self.liblist = []
 
     #getliblist
-	def getliblist(self):
-		try:
-			with open(self.repo, 'rb') as csvfile:
-				reader = csv.reader(csvfile)
-				for row in reader:
-					self.liblist.append(row)
-		except: print 'Couldn\'t get repo.'
-		return 'getliblist'
+    def getliblist(self):
+        try:
+            with open(self.repo, 'rb') as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    self.liblist.append(row)
+        except: print 'Couldn\'t get repo.'
+        return 'getliblist'
 
     #listlibs
-	def listlibs(self):
-		try:
-			for lib in self.liblist:
-				print lib[0]
-		except: print 'There is no liblist'
-		return 'listlibs'
+    def listlibs(self):
+        try:
+            for lib in self.liblist:
+                print lib[0]
+        except: print 'There is no liblist'
+        return 'listlibs'
 
     #installlib
-	def installlib(self, name):
-		found = False
-		for lib in self.liblist:
-			if lib[0] == name:
-				url = lib[1]
-				found = True
-				try:
-					if os.path.isdir(self.libraries+name) == False:
-						req = requests.get(url)
-						zipobj = zipfile.ZipFile(StringIO.StringIO(req.content))
-						zipobj.extractall(self.libraries)
-						dirname = zipobj.namelist()[0][:-1]
-						os.rename(self.libraries+dirname,self.libraries+name)
-						print 'Installed '+name
-					else: print name+' is already installed.'
-				except: print 'There was an error.'
-		if found == False: print 'The lib '+name+' is not in the repo.'
-		return 'installlib'
+    def installlib(self, name):
+        found = False
+        for lib in self.liblist:
+            if lib[0] == name:
+                url = lib[1]
+                found = True
+                try:
+                    if os.path.isdir(self.libraries+name) == False:
+                        req = requests.get(url)
+                        zipobj = zipfile.ZipFile(StringIO.StringIO(req.content))
+                        zipobj.extractall(self.libraries)
+                        dirname = zipobj.namelist()[0][:-1]
+                        os.rename(self.libraries+dirname,self.libraries+name)
+                        print 'Installed '+name
+                    else: print name+' is already installed.'
+                except: print 'There was an error.'
+        if found == False: print 'The lib '+name+' is not in the repo.'
+        return 'installlib'
 
     #installall
 	def installall(self):
@@ -67,19 +67,19 @@ class library():
 		return 'installall'
 
     #deletelib
-        def deletelib(self, name):
-            found = False
-            for lib in self.liblist:
-                if lib[0] == name:
-                    url = lib[1]
-                    found = True
-                    try:
-                        if os.path.isdir(self.libraries+name) == False:
-                            print name+' is not installed.'
-                        else:
-                            shutil.rmtree(self.libraries+name)
-                            print name+' is deleted.'
-                    except: print 'There was an error.'
+    def deletelib(self, name):
+        found = False
+        for lib in self.liblist:
+            if lib[0] == name:
+                url = lib[1]
+                found = True
+                try:
+                    if os.path.isdir(self.libraries+name) == False:
+                        print name+' is not installed.'
+                    else:
+                        shutil.rmtree(self.libraries+name)
+                        print name+' is deleted.'
+                except: print 'There was an error.'
             if found == False: print 'The lib '+name+' is not in the repo.'
             return 'deletelib'
 
