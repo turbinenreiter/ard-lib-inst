@@ -10,6 +10,7 @@ import csv
 import sys
 import getopt
 from os.path import expanduser
+import crawl
 
 
 
@@ -18,7 +19,7 @@ class library():
 #init
 	def __init__(self):
 		self.home = expanduser("~")
-		self.repo = os.path.dirname(os.path.realpath(__file__))+'/repo.csv'
+		self.repo = os.path.dirname(os.path.realpath(__file__))+'/test.csv'
 		self.libraries = self.home+'/sketchbook/libraries/'
 		self.liblist = []
 
@@ -59,6 +60,20 @@ class library():
 				except: print 'There was an error.'
 		if found == False: print 'The lib '+name+' is not in the repo.'
 		return 'installlib'
+"""
+#installurl the idea to install via an url but it doesnt work in any way
+	def installurl(self,url):
+		try:
+			if os.path.isdir(self.libraries+name) == False:
+				req = requests.get(url)
+				zipobj = zipfile.ZipFile(StringIO.StringIO(req.content))
+				zipobj.extractall(self.libraries)
+				dirname = zipobj.namelist()[0][:-1]
+				os.rename(self.libraries+dirname,self.libraries+name)
+				print 'Installed '+name
+			else: print name+' is already installed.'
+		except: print 'There was an error.'
+"""		
 
 #installall
 	def installall(self):
@@ -91,6 +106,9 @@ def main(argv):
 		sys.exit()
 	elif command == 'install':
 		repo.installlib(lib)
+		sys.exit()
+	elif command == 'install' and lib=='url':
+		repo.installurl()
 		sys.exit()
 	else:
 		error()
