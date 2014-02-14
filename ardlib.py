@@ -59,7 +59,8 @@ class library():
                         os.rename(self.libraries+dirname,self.libraries+name)
                         print 'Installed '+name
                     else: print name+' is already installed.'
-                except: print 'There was an error.'
+                except Exception as detail: 
+                    print 'There was an error:', detail
         if found == False: print 'The lib '+name+' is not in the repo.'
         return 'installlib'
 
@@ -82,7 +83,8 @@ class library():
                     else:
                         shutil.rmtree(self.libraries+name)
                         print name+' is deleted.'
-                except: print 'There was an error.'
+                except Exception as detail: 
+                    print 'There was an error.', detail
             if found == False: print 'The lib '+name+' is not in the repo.'
             return 'deletelib'
 
