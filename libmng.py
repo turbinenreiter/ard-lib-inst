@@ -1,4 +1,3 @@
-
 # Author: Schaden Philipp
 #
 # Description:
@@ -7,14 +6,16 @@
 #   *add library
 #   *delete library
 #   *check for multiple entries
+#   *get all entries
 
 #import library
 import os
 import csv
 
 class Libmng:
-
+    
     def __init__(self,libname):
+        self.libs =[]
         if libname != "":
             self.file = libname+'.csv'
         #    with open(libname+'.csv',"a") as repo
@@ -47,10 +48,14 @@ class Libmng:
         os.rename('new.csv', self.file)
               
     
-    # getlib is used to get the source url from an entrie with the name 
+    # getlib is used to get the source url from an entry with the name 
     # from the csv file
     def getlib(self, name):
-        pass
+        with open(self.file, 'rb')as repo:
+            for row in csv.reader(repo):
+                if row[0] == name:
+                    return str(row[1])
+        
         
     # returns True if the name or the source is found in the repo.csv file
     # and False if not 
@@ -61,4 +66,17 @@ class Libmng:
                     return True
             
         return False
+        
+    # returns an array of the first (part = 1) the second (part = 2) or 
+    # both (part = 0) columns from the csv file
+    def getall(self,part):
+        with open(self.file,'rb') as repo:
+            for row in csv.reader(repo):
+                if part == 0:
+                    self.libs.append(row)
+                else:
+                    self.libs.append(row[part-1])
+                
+        return self.libs
+        
     
