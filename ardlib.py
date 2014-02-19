@@ -11,12 +11,15 @@ import csv
 import sys
 import getopt
 from os.path import expanduser
+from libmng import Libmng
+
 
 
 class library():
 
     #init
     def __init__(self):
+        self.libmng = Libmng('repo')
         self.home = expanduser("~")
         self.repo = os.path.dirname(os.path.realpath(__file__))+'/repo.csv'
         self.libraries = self.home+'/sketchbook/libraries/'
@@ -25,68 +28,60 @@ class library():
             sys.exit()
         self.liblist = []
 
-    #getliblist
-    def getliblist(self):
-        try:
-            with open(self.repo, 'rb') as csvfile:
-                reader = csv.reader(csvfile)
-                for row in reader:
-                    self.liblist.append(row)
-        except: print 'Couldn\'t get repo.'
-        return 'getliblist'
 
     #listlibs
-    def listlibs(self):
+    def listlibs(self, part):
         try:
-            for lib in self.liblist:
-                print lib[0]
+            for name in self.libmng.getall(part): 
+                print name
         except: print 'There is no liblist'
         return 'listlibs'
+        
+    
 
     #installlib
     def installlib(self, name):
-        found = False
-        for lib in self.liblist:
-            if lib[0] == name:
-                url = lib[1]
-                found = True
-                try:
-                    if os.path.isdir(self.libraries+name) == False:
-                        req = requests.get(url)
-                        zipobj = zipfile.ZipFile(StringIO.StringIO(req.content))
-                        zipobj.extractall(self.libraries)
-                        dirname = zipobj.namelist()[0][:-1]
-                        os.rename(self.libraries+dirname,self.libraries+name)
-                        print 'Installed '+name
-                    else: print name+' is already installed.'
-                except Exception as detail: 
-                    print 'There was an error:', detail
-        if found == False: print 'The lib '+name+' is not in the repo.'
-        return 'installlib'
+         
+        found = self.libmng.checklib(name,'')
+        if found == False: 
+            print 'The lib '+name+' is not in the repo.'
+            return 
+        url = self.libmng.getlib(name)
+        try:
+            if os.path.isdir(self.libraries+name) == False:
+                req = requests.get(url)
+                zipobj = zipfile.ZipFile(StringIO.StringIO(req.content))
+                zipobj.extractall(self.libraries)
+                dirname = zipobj.namelist()[0][:-1]
+                os.rename(self.libraries+dirname,self.libraries+name)
+                print 'Installed '+name
+            else: print name+' is already installed.'
+        except Exception as detail: 
+            print 'There was an error:', detail
+
 
     #installall
     def installall(self):
-        for lib in self.liblist:
-            self.installlib(lib[0])
+        for name in self.libmng.getall(1):
+            self.installlib(name)
         return 'installall'
 
     #deletelib
     def deletelib(self, name):
-        found = False
-        for lib in self.liblist:
-            if lib[0] == name:
-                url = lib[1]
-                found = True
-                try:
-                    if os.path.isdir(self.libraries+name) == False:
-                        print name+' is not installed.'
-                    else:
-                        shutil.rmtree(self.libraries+name)
-                        print name+' is deleted.'
-                except Exception as detail: 
-                    print 'There was an error.', detail
-            if found == False: print 'The lib '+name+' is not in the repo.'
-            return 'deletelib'
+        found = self.libmng.checklib(name,'')
+        if found == False: 
+            print 'The lib '+name+' is not in the repo.'
+            return
+        url = self.libmng.getlib(name)
+        try:
+            if os.path.isdir(self.libraries+name) == False:
+                print name+' is not installed.'
+            else:
+                shutil.rmtree(self.libraries+name)
+                print name+' is deleted.'
+        except Exception as detail: 
+            print 'There was an error.', detail
+        return 'deletelib'
 
 
 def error():
@@ -97,7 +92,6 @@ def error():
 def main(argv):
 	
     repo = library()
-    repo.getliblist()
     try:
         command = argv[0]
     except:
@@ -112,7 +106,7 @@ def main(argv):
     if command == '-h':
         error()
     elif command == 'listlibs':
-        repo.listlibs()
+        repo.listlibs(1)
         sys.exit()
     elif command == 'install' and lib == 'all':
         repo.installall()
