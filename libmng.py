@@ -25,7 +25,7 @@ class Libmng:
         
 
     # addlib adds a library with name to the csv file if it's source 
-    #is not already there
+    # is not already there
     def addlib(self, name, source, info):
         if not self.checklib(name,source):
             with open(self.file,"a") as repo:
