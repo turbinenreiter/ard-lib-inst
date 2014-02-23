@@ -1,9 +1,14 @@
 from libmng import Libmng
+from repoupdater import updater
 
 if __name__ == "__main__":
-    
-    lib = Libmng('abck')
+    updt = updater()
+    updt.getmaster(None)
+    updt.getdiff()
 
+    
+    
+"""    lib = Libmng('abck')
     lib.addlib('test','www.test.at','its just a test')
     lib.addlib('test','www.test.at','its just a test')
     lib.addlib('delete','www.hope-its-deleted.com','delete this')
@@ -14,4 +19,4 @@ if __name__ == "__main__":
     print lib.checklib('','www.hope-its-deleted.com')
     print lib.getlib('test')
     print lib.getall(0) 
-
+"""
