@@ -3,8 +3,7 @@ from repoupdater import updater
 
 if __name__ == "__main__":
     updt = updater()
-    updt.getmaster(None)
-    updt.getdiff()
+    updt.getmaster('file:///home/guy/git/ard-lib-inst/test.cvs')
 
     
     
